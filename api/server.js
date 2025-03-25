@@ -29,9 +29,9 @@ server.get("/api/pizzas", async function getPizzas(req, res) {
     "SELECT pizza_type_id, name, category, ingredients as description FROM pizza_types"
   );
   const pizzaSizesPromise = db.all(
-    `SELECT 
+    `SELECT
       pizza_type_id as id, size, price
-    FROM 
+    FROM
       pizzas
   `
   );
@@ -63,9 +63,9 @@ server.get("/api/pizzas", async function getPizzas(req, res) {
 
 server.get("/api/pizza-of-the-day", async function getPizzaOfTheDay(req, res) {
   const pizzas = await db.all(
-    `SELECT 
+    `SELECT
       pizza_type_id as id, name, category, ingredients as description
-    FROM 
+    FROM
       pizza_types`
   );
 
@@ -114,9 +114,9 @@ server.get("/api/order", async function getOrders(req, res) {
     [id]
   );
   const orderItemsPromise = db.all(
-    `SELECT 
+    `SELECT
       t.pizza_type_id as pizzaTypeId, t.name, t.category, t.ingredients as description, o.quantity, p.price, o.quantity * p.price as total, p.size
-    FROM 
+    FROM
       order_details o
     JOIN
       pizzas p
@@ -126,7 +126,7 @@ server.get("/api/order", async function getOrders(req, res) {
       pizza_types t
     ON
       p.pizza_type_id = t.pizza_type_id
-    WHERE 
+    WHERE
       order_id = ?`,
     [id]
   );
@@ -241,9 +241,9 @@ server.get("/api/past-order/:order_id", async function getPastOrder(req, res) {
     }
 
     const orderItems = await db.all(
-      `SELECT 
+      `SELECT
         t.pizza_type_id as pizzaTypeId, t.name, t.category, t.ingredients as description, o.quantity, p.price, o.quantity * p.price as total, p.size
-      FROM 
+      FROM
         order_details o
       JOIN
         pizzas p
@@ -253,7 +253,7 @@ server.get("/api/past-order/:order_id", async function getPastOrder(req, res) {
         pizza_types t
       ON
         p.pizza_type_id = t.pizza_type_id
-      WHERE 
+      WHERE
         order_id = ?`,
       [orderId]
     );
